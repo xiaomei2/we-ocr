@@ -1,0 +1,6 @@
+github.com/cloudflare/ahocorasick v0.0.0-20210425175752-730270c3e184 h1:8yL+85JpbwrIc6m+7N1iYrjn/22z68jwrTIBOJHNe4k=
+github.com/cloudflare/ahocorasick v0.0.0-20210425175752-730270c3e184/go.mod h1:tGWUZLZp9ajsxUOnHmFFLnqnlKXsCn6GReG4jAD59H0=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.854 h1:pP6gLwxXRAIJGEhwfo6TXJRppFbl/OTF851+lY477JY=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.854/go.mod h1:r5r4xbfxSaeR04b166HGsBa/R4U3SueirEUpXGuw+Q0=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ocr v1.0.854 h1:fiewxSXZzhTkecAmvWIkvnl/1843p5SqSB0thTVHRPw=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ocr v1.0.854/go.mod h1:x1cslq3n4ZnKPX+fWeeY8bx0bg5iGH6XtlyMQ+XYbGA=
