@@ -15,8 +15,8 @@ import (
 func ExtractText(imageBase64 string) (string, error) {
 	// 实例化一个认证对象，入参需要传入腾讯云账户 SecretId 和 SecretKey，此处还需注意密钥对的保密
 	credential := common.NewCredential(
-		"AKIDynSvCG8nERYTAcqsjNaZLtDJJ6f072iJ",
-		"RjphKjxzTr2340mLm16zl5JMBsNlxxjK",
+		"",
+		"",
 	)
 
 	// 实例化一个client选项，可选的，没有特殊需求可以跳过
