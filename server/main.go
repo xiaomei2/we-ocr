@@ -59,6 +59,37 @@ func ExtractText(imageBase64 string) (string, error) {
 func main() {
 	firstKeywords := []string{"取件码", "取货码"}
 	secondKeywords := []string{"顺丰快递", "EMS快递", "申通快递", "圆通快递", "韵达快递", "极兔速递", "中通快递", "尼乔卫生站", "邮政快递", "韵达快递", "圆通速递"}
+	// 获取图片文字内容
+	//text := getImagesText()
+	text := ":取件码4-a-a，是圆通快递取货码"
+	result := logic.IsKeywordBefore(text, firstKeywords, secondKeywords)
+	newText, newKeywordMap := logic.ReplaceKeywordsAndCreateMap(text, secondKeywords)
+	Keywords := logic.GetNewKeyWords(newKeywordMap)
+	fmt.Printf("result:%v\n", result)
+	fmt.Printf("newText:%v\n", newText)
+	fmt.Printf("Keywords:%v\n", Keywords)
+
+	if result {
+		contents := logic.GetFirstContentMap(newText, Keywords)
+		jsonData, err := json.Marshal(contents)
+		if err != nil {
+			fmt.Println("JSON 编码失败:", err)
+			return
+		}
+		fmt.Println(string(jsonData))
+
+	} else {
+		contents := logic.GetSecondContentMap(newText, Keywords)
+		jsonData, err := json.Marshal(contents)
+		if err != nil {
+			fmt.Println("JSON 编码失败:", err)
+			return
+		}
+		fmt.Println(string(jsonData))
+	}
+	return
+}
+func getImagesText() string {
 	// 读取本地图片文件
 	fileData, err := ioutil.ReadFile("./images/7.jpg")
 	if err != nil {
@@ -70,24 +101,5 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Printf("识别结果:%s\n", text)
-	result := logic.IsKeywordBefore(text, firstKeywords, secondKeywords)
-	if result {
-		contents := logic.GetSecondContentMap(text, secondKeywords)
-		jsonData, err := json.Marshal(contents)
-		if err != nil {
-			fmt.Println("JSON 编码失败:", err)
-			return
-		}
-		fmt.Println(string(jsonData))
-	} else {
-		contents := logic.GetFirstContentMap(text, secondKeywords)
-		jsonData, err := json.Marshal(contents)
-		if err != nil {
-			fmt.Println("JSON 编码失败:", err)
-			return
-		}
-		fmt.Println(string(jsonData))
-	}
-	return
+	return text
 }

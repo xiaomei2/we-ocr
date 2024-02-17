@@ -5,9 +5,9 @@ type Content struct {
 	PickupCode     string `json:"pickup_code"`     //
 }
 
-func GetFirstContentMap(text string, keywords []string) []Content {
-	sortedKeywords := getSortedKeywordsPositions(keywords, text)
-	keywordsContentMap := getBehindContentMap(sortedKeywords, text)
+// 关键字之间内容
+func GetFirstContentMap(newText string, keywords []string) []Content {
+	keywordsContentMap := GetBehindContentMap(keywords, newText)
 	var contents []Content
 	for k, v := range keywordsContentMap {
 		content := Content{
@@ -19,9 +19,9 @@ func GetFirstContentMap(text string, keywords []string) []Content {
 	return contents
 }
 
-func GetSecondContentMap(text string, keywords []string) []Content {
-	sortedKeywords := getSortedKeywordsPositions(keywords, text)
-	keywordsContentMap := getFrontContentMap(sortedKeywords, text)
+// 关键字前面内容
+func GetSecondContentMap(newText string, keywords []string) []Content {
+	keywordsContentMap := getFrontContentMap(keywords, newText)
 	var contents []Content
 	for k, v := range keywordsContentMap {
 		content := Content{

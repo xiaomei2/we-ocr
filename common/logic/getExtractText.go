@@ -29,9 +29,47 @@ func getSortedKeywordsPositions(keywords []string, text string) []string {
 	return sortedKeywords
 }
 
+// 关键字前面
+func getFrontContentMap(sortedKeywords []string, text string) map[string]string {
+	contentMap := make(map[string]string)
+	textLength := len(text)
+	pattern := `\w+-[\w-]+`
+	re := regexp.MustCompile(pattern)
+
+	for i, keyword := range sortedKeywords {
+		var start int
+		if i == 0 {
+			start = 0
+		} else {
+			prevKeyword := sortedKeywords[i-1]
+			start = strings.Index(text, prevKeyword) + len(prevKeyword)
+		}
+		end := strings.Index(text, keyword)
+		if end == -1 {
+			end = textLength
+		}
+		content := text[start:end]
+		var contentTest string
+		matches := re.FindAllString(content, -1)
+		fmt.Println("信息:", keyword, content)
+		contentTest = strings.Join(matches, ", ")
+		if len(matches) > 0 && len(contentTest) < 15 {
+			contentMap[keyword] = strings.Join(matches, ", ")
+		} else {
+			//关键字字内容匹配不满足要求就换FindAndPrintKeywords()
+			printKeytext := FindAndPrintKeywords(content)
+			if printKeytext != "2000" {
+				contentMap[keyword] = printKeytext
+			}
+		}
+	}
+
+	return contentMap
+}
+
 // 根据排序后的关键字获取它们之间的文本内容
 // 关键字后面
-func getBehindContentMap(sortedKeywords []string, text string) map[string]string {
+func GetBehindContentMap(sortedKeywords []string, text string) map[string]string {
 	contentMap := make(map[string]string)
 	textLength := len(text)
 	pattern := `\w+-[\w-]+`
@@ -70,44 +108,6 @@ func getBehindContentMap(sortedKeywords []string, text string) map[string]string
 			}
 		}
 	}
-	return contentMap
-}
-
-// 关键字前面
-func getFrontContentMap(sortedKeywords []string, text string) map[string]string {
-	contentMap := make(map[string]string)
-	textLength := len(text)
-	pattern := `\w+-[\w-]+`
-	re := regexp.MustCompile(pattern)
-
-	for i, keyword := range sortedKeywords {
-		var start int
-		if i == 0 {
-			start = 0
-		} else {
-			prevKeyword := sortedKeywords[i-1]
-			start = strings.Index(text, prevKeyword) + len(prevKeyword)
-		}
-		end := strings.Index(text, keyword)
-		if end == -1 {
-			end = textLength
-		}
-		content := text[start:end]
-		var contentTest string
-		matches := re.FindAllString(content, -1)
-		fmt.Println(keyword, content)
-		contentTest = strings.Join(matches, ", ")
-		if len(matches) > 0 && len(contentTest) < 15 {
-			contentMap[keyword] = strings.Join(matches, ", ")
-		} else {
-			//关键字字内容匹配不满足要求就换FindAndPrintKeywords()
-			printKeytext := FindAndPrintKeywords(content)
-			if printKeytext != "2000" {
-				contentMap[keyword] = printKeytext
-			}
-		}
-	}
-
 	return contentMap
 }
 
@@ -156,6 +156,14 @@ func FindAndPrintKeywords(text string) string {
 	return "2000"
 }
 
+func GetPrecedingContent(keyword string, text string) string {
+	index := strings.Index(text, keyword)
+	if index == -1 {
+		return ""
+	}
+	return text[:index]
+}
+
 // 全文提取
 func findFirstKeyword(text string, keywords []string) string {
 	var foundKeyword string
@@ -169,11 +177,4 @@ func findFirstKeyword(text string, keywords []string) string {
 	}
 
 	return foundKeyword
-}
-func GetPrecedingContent(keyword string, text string) string {
-	index := strings.Index(text, keyword)
-	if index == -1 {
-		return ""
-	}
-	return text[:index]
 }

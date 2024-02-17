@@ -1,4 +1,4 @@
-package main
+package logic
 
 import (
 	"fmt"
@@ -6,21 +6,8 @@ import (
 	"strings"
 )
 
-func main() {
-	// 假设这是你要处理的文本
-	text := "这里有苹果，那里也有苹果，苹果很多。"
-
-	// 定义一个关键字数组
-	keywords := []string{"苹果", "那里"}
-
-	// 替换文本中的关键字，并返回替换后的文本和标记到关键字的映射
-	newText, newKeywordMap := replaceKeywordsAndCreateMap(text, keywords)
-	fmt.Printf("newText: %s\n", newText)
-	fmt.Printf("tokenToKeywordMap: %v\n", newKeywordMap)
-}
-
-// replaceKeywordsWithTokensAndCreateMap 替换文本中的关键字，并为每个实例创建特定标记，然后生成标记到关键字的映射
-func replaceKeywordsAndCreateMap(text string, keywords []string) (string, map[string]string) {
+// 替换文本中的关键字，并为每个实例创建特定标记，然后生成标记到关键字的映射
+func ReplaceKeywordsAndCreateMap(text string, keywords []string) (string, map[string]string) {
 	keywordPositions := make(map[int]string)
 	tokenCounter := 1 // 用于为每个关键字实例生成递增的标记
 	tokenToKeywordMap := make(map[string]string)
